@@ -1,0 +1,316 @@
+<!DOCTYPE html>
+<!-- saved from url=(0091)https://content.byui.edu/file/2390954c-eadb-4592-aa96-5a29275f9404/1/Ponder/470.07.Lab.html -->
+<html lang="en"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    
+	<title>Ponder 07 : Stack Manipulation</title>
+    <link href="./Ponder 07 _ Stack Manipulation_files/styles.css" rel="stylesheet" type="text/css"> 
+</head>
+<body>
+  <div id="main" class="splash">
+    <div id="header">
+       <img class="banner" alt="CS 470 Banner" title="CS 470 Banner" src="./Ponder 07 _ Stack Manipulation_files/470.2.Banner.jpg">
+    </div> <!-- id="header" -->
+    <article>
+
+  <h1>Ponder 07 : Stack Manipulation</h1>
+    <h5>Due Saturday at 5:00 PM MST</h5>
+
+  <p>The purpose of this assignment is to increase our understanding of the memory management
+  		and stack mechanisms on systems we use. 
+  		This is a hands-on exercise where we will systematically probe the structures
+        created by our compiler and operating system.
+        Note that the textbook may help you somewhat
+        and the "Smashing the Stack for Fun and Profit" article may be useful,
+        most of the details will be only discovered through investigation and trial &amp; error.
+        In other words, this is hard.</p>
+
+  <h2>Description</h2>
+  <p>These exercises will be performed on Linux by writing a program that does three things: 
+  		1) Display the address of the stack, the heap, and the code segments; 
+        2) Display the contents of the stack in a (somewhat) easy to understand format; and
+        3) Demonstrate your mastery of the stack by manipulating data on the stack 
+        		rather than using traditional constructs such as parameters and variables</p>
+  <p>Please start with the following program which will have a simple menu interface and stub functions:</p>
+  <pre>/home/cs470/week07/lab07.cpp</pre>
+
+  <h3>Part 1: Address</h3>
+  <p>For part one, implement the part of the function <code>partOne()</code> that finds any address in
+  		the Stack, the Heap, and the Code segments.
+        Note that, due to address randomization, your results will be different than the above 
+        (and different with every execution).
+        Your job is to find an address anywhere in the Stack, Heap, and Code sections.</p>
+  <pre>Stack: 0x7ffdaa939550
+Heap:  0x25f5010
+Code:  0x4011e9</pre>
+  <p>You will be provided with the following function within <code>lab07.cpp</code>:</p>
+  <pre>/**********************************************
+ * Part 1
+ *
+ * Find the address of the stack, heap, and code.
+ * Note that it will be in a different location with
+ * every execution
+ **********************************************/
+void partOne(int byValueParameter)
+{
+   void * pStack = NULL;
+   void * pHeap  = NULL;
+   void * pCode  = NULL;
+
+   ////////////////////////////////////////////////
+   // put your magic code between here...
+
+   // ... and here
+   ////////////////////////////////////////////////
+
+   // display the results
+   cout &lt;&lt; "Stack: " &lt;&lt; pStack &lt;&lt; endl;
+   cout &lt;&lt; "Heap:  " &lt;&lt; pHeap  &lt;&lt; endl;
+   cout &lt;&lt; "Code:  " &lt;&lt; pCode  &lt;&lt; endl;
+
+   return;
+}</pre>
+   <p>Note that the display code is provided. 
+   	Your job is to assign <code>pStack</code>, <code>pHeap</code>, and <code>pCode</code>
+    to addresses that are in the Stack, Heap, and Code segments of memory.
+    Of course, there are many correct ways to do this...</p>
+
+  <h3>Part 2: Display the Stack</h3>
+  <p>The second part is to display the contents of the stack. 
+  	One example would be the following:</p>
+  <pre>[ i]        address         hexadecimal             decimal        characters
+----+---------------+-------------------+-------------------+-----------------+
+[20] 0x7ffea6d88028        7ffea6d880f8     140731697627384   . . . . . . . .
+[19] 0x7ffea6d88020                   0                   0   . . . . . . . .
+[18] 0x7ffea6d88018        7f89df7c13d5     140230136697813   . . . . . . . .
+[17] 0x7ffea6d88010                   0                   0   . . . . . . . .
+[16] 0x7ffea6d88008                   0                   0   . . . . . . . .
+[15] 0x7ffea6d88000    25256e69616d2525 2676666952426792229   % % m a i n % %
+[14] 0x7ffea6d87ff8              12d687             1234567   . . . . . . . .
+[13] 0x7ffea6d87ff0           200401950          8594135376   P . @ . . . . .
+[12] 0x7ffea6d87fe8              401053             4198483   S . @ . . . . .
+[11] 0x7ffea6d87fe0        7ffea6d88010     140731697627152   . . . . . . . .
+[10] 0x7ffea6d87fd8                   0                   0   . . . . . . . .
+[ 9] 0x7ffea6d87fd0                   0                   0   . . . . . . . .
+[ 8] 0x7ffea6d87fc8        7ffea6d880f0     140731697627376   . . . . . . . .
+[ 7] 0x7ffea6d87fc0              400eb0             4198064   . . @ . . . . .
+[ 6] 0x7ffea6d87fb8                   0                   0   . . . . . . . .
+[ 5] 0x7ffea6d87fb0        7ffea6d880f0     140731697627376   . . . . . . . .
+[ 4] 0x7ffea6d87fa8           4a6d87fc0         19979075520   . . . . . . . .
+[ 3] 0x7ffea6d87fa0        7ffea6d87fa0     140731697627040   . . . . . . . .
+[ 2] 0x7ffea6d87f98        7ffea6d87f98     140731697627032   . . . . . . . .
+[ 1] 0x7ffea6d87f90              a520e8            10821864   8   . . . . . .
+[ 0] 0x7ffea6d87f88              34bf15             3456789   . . 4 . . . . .
+[-1] 0x7ffea6d87f80        7ffea6d87fbc     140731697627068   . . . . . . . .
+[-2] 0x7ffea6d87f78        7ffea6d88000     140731697627136   . . . . . . . .
+[-3] 0x7ffea6d87f70              23cace             2345678   . . # . . . . .
+[-4] 0x7ffea6d87f68           20000000f          8589934607   . . . . . . . .
+</pre>
+  <p>Every time you run the program, you can expect different addresses and different results.
+  	Also, your stack display will appear different than this with every local variable you add.
+    There are a few things to notice about this display:</p>
+  <ul>
+     <li>In <code>main()</code>, there is the string <code>"%%main%%"</code>.
+     	We can see this string in offset 15.</li>
+     <li>In <code>main()</code>, there is the long integer <code>1234567</code>.
+     	We can see this integer in offset 14.</li>
+     <li>The function <code>main()</code> passes the long integer <code>2345678</code> to <code>partTwo()</code>.
+     	We can see this in offset -3.</li>
+     <li>The function <code>partTwo()</code> has a local variable with the value <code>3456789</code>.
+     	We can see this in offset 0.
+        This shouldn't be surprising because we are instructed to start our stack probe from that location.</li>
+     <li>The stack is in memory location <code>0xffffea6d????</code> on this execution.
+     	Therefore the data in offset -2, -1, 2, 3, 8, 11, and 20 all are points
+        to locations on the stack.
+        In fact, you can see that the pointer at offset -2 refers to the stack at offset 15.
+        This is expected.
+        Our <code>partTwo()</code> function has two parameters.
+        One of these is a pointer to the text in <code>main()</code> containing the string <code>"%%main%%"</code>.</li>
+     <li>Finally, on this execution, <code>main()</code> is located at location <code>0x401008</code>.
+     	We can see in offset 12 is an address slightly after <code>0x401053</code>.
+        This is the return address. 
+        In other words, when <code>partTwo()</code> finishes execution,
+        the program will jump to location <code>0x401053</code> in <code>main()</code> to resume execution.</li>
+  </ul>
+  <p>Your job is to display this table.
+  		The following code will be provided:</p>
+  <pre>/*************************************************
+ * PART 2
+ *
+ * Display the contents of the stack. This will be from
+ * slot -4 to slot 20.
+ *************************************************/
+void partTwo(char *text, long number)
+{
+   // start your display of the stack from this point
+   long bow = number + 1111111;
+
+   // header for our table. Use these setw() offsets in your table
+   cout &lt;&lt; "[" &lt;&lt; setw(2) &lt;&lt; 'i' &lt;&lt; ']'
+        &lt;&lt; setw(15) &lt;&lt; "address"
+        &lt;&lt; setw(20) &lt;&lt; "hexadecimal"
+        &lt;&lt; setw(20) &lt;&lt; "decimal"
+        &lt;&lt; setw(18) &lt;&lt; "characters"
+        &lt;&lt; endl;
+   cout &lt;&lt; "----+"
+        &lt;&lt; "---------------+"
+        &lt;&lt; "-------------------+"
+        &lt;&lt; "-------------------+"
+        &lt;&lt; "-----------------+\n";
+   for (int i = 20; i &gt;= -4; i--)
+   {
+
+      ////////////////////////////////////////////////
+      // put your magic code between here...
+
+      // ... and here
+      ////////////////////////////////////////////////
+   }
+}
+</pre>
+   <p>Notice the spacing between the columns is specified by the <code>setw()</code>'s in the header.
+   		You may want to use these to display your table.</p>
+
+  <h3>Part 3: Manipulate the Stack</h3>
+  <p>Implement the part of the function <code>readStack()</code> between the comments.
+  		Your job is to be able to read the 
+  		local variables in <code>partThree()</code> from <code>readStack()</code>
+        without passing the data as parameters and without resorting to global variables.
+        Also, you need to modify the output of <code>pointerFunction()</code> to give the desired output.
+        This is done by finding where on the stack resides the local variables
+        of the function <code>partThree()</code>.</p>
+  <p>You will be provided with the following function within <code>lab05.cpp</code>:</p>
+  <pre>/**********************************************************************
+ * All your code needs to exist in this function below the comment
+ *********************************************************************/
+void readStack()
+{
+   int   number;
+   char  text[16];
+
+   ////////////////////////////////////////////////
+   // put your magic code between here...
+
+
+   // ... and here
+   ////////////////////////////////////////////////
+
+   // output the goods
+   cout &lt;&lt; "\tnumber: "
+        &lt;&lt; number
+        &lt;&lt; endl;
+   cout &lt;&lt; "\ttext:   "
+        &lt;&lt; text
+        &lt;&lt; endl;
+
+   return;
+}
+
+/*******************************************************************
+ * Part 3
+ *
+ * This function contains the data that you are trying to manipulate.
+ * Please don't modify partTwo() in any way
+ ********************************************************************/
+void partThree()
+{
+   int   number;   // first local variable that you need to read
+   char  text[16]; // second
+
+   char  letterGrade;
+   void (*pointerFunction)(char);
+
+   // get the values
+   cout &lt;&lt; "number: ";
+   cin  &gt;&gt; number;
+   cout &lt;&lt; "text:   ";
+   cin  &gt;&gt; text;
+
+
+   // Call the function and display the results.
+   pointerFunction = fail;
+   letterGrade = 'B';
+   readStack();            // vulnerability is here
+   (*pointerFunction)(letterGrade);
+
+   return;
+}</pre>
+  <p>You will provide code to produce the following output:</p>
+  <pre>number: <i>98765432</i>
+text:   <i>ScopeIsForWimps!</i>
+        number: 98765312
+        text:   ScopeIsForWimps!
+        Good job, you got a(n) 'A'
+</pre>
+
+   <p>To get full credit, you must do four things:</p>
+   <ol>
+    <li>Retrieve the value of number in the function <code>partThree()</code> and set it to number in 
+    		<code>readStack()</code>.</li>
+    <li>Retrieve the value from the text array in <code>partThree()</code> and assign it to text in 
+    		<code>readStack()</code>.</li>
+    <li>Change the value <code>letterGrade</code> in <code>partThree()</code> from 
+    		<code>'B'</code> to <code>'A'</code>.</li>
+    <li>Change <code>pointerFunction</code> in <code>partThree()</code> to point to 
+        	<code>pass()</code> rather than <code>fail()</code>.</li>
+   </ol>
+  <p>You will need to do this in such a way that the solution is <i>robust</i>. This can be done by adding asserts to make sure 
+  		the stack offset is where you think it is. </p>
+  <p><b>Hint</b>: To accomplish this,
+  		you may want to print out the contents of the stack so you can find the locations of the various 
+  		local variables in <code>partTwo()</code> similar to what you did in <code>partTwo()</code>.</p>
+  <p><b>Hint</b>: Please take a look at the "Smashing the Stack for Fun and Profit" article
+  		for a detailed discussion of how the stack works.
+        The textbook gives a high-level description of this,
+        but the stack smashing article gives you the level of detail that you will need.</p>
+        
+
+  <h2>Assessment</h2>
+  <p>Submit your response to "<code>Lab 07</code>."
+  	Note that you should work independently.
+  	You are allowed to share sources or articles that describe various parts to the problem,
+    but you are not allowed to share code.
+    Please feel free to ask me questions by e-mail if you are stumped.</p>
+  <p>The following is the test bed for the assignment:</p>
+    <pre>testBed cs470/lab07 program.cpp</pre>
+  <table class="rubric">
+   <tbody>
+    <tr>
+     <th>&nbsp;</th>
+     <th>Exceptional<br>100%</th>
+     <th>Good       <br>90%</th>
+     <th>Acceptable <br>70%</th>
+     <th>Developing <br>50%</th>
+     <th>Missing    <br>0%</th>
+    </tr>
+    <tr>
+     <th>Address<br>20%</th>
+     <td>The addresses are found in the most elegant way possible</td> <!-- 100% -->
+     <td>All three addresses are correctly found</td> <!-- 90% -->
+     <td>Two addresses are found</td> <!-- 70% -->
+     <td>One address is found</td> <!-- 50% -->
+     <td>No attempt was made to find the address</td> <!-- 0% -->
+    </tr>
+    <tr>
+     <th>Display Stack<br>30%</th>
+     <td>Solution is elegant and robust</td> <!-- 100% -->
+     <td>The table displaying the stack looks correct</td> <!-- 90% -->
+     <td>The table exists and parts of the stack are correctly displayed</td> <!-- 70% -->
+     <td>Elements of the solution are present</td> <!-- 50% -->
+     <td>Not attempted</td> <!-- 0% -->
+    </tr>
+    <tr>
+     <th>Manipulate the Stack<br>50%</th>
+     <td>The code is elegant and the method is robust</td> <!-- 100% -->
+     <td>Able to get the program to say "Good job, you got a(n) 'A'"</td> <!-- 90% -->
+     <td>Solution is found except for one major defect</td> <!-- 70% -->
+     <td>Elements of the solution are present</td> <!-- 50% -->
+     <td>No attempt was made to manipulate the data on the stack</td>
+    </tr>
+   </tbody>
+  </table>
+  <br>
+  </article>
+ </div>
+
+
+</body></html>
