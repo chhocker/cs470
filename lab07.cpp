@@ -6,9 +6,6 @@
 *    Claire Hocker
 * Summary: 
 *    This program is designed to illustrate weaknesses in the stack.
-*    I am so sorry it is not working! I tried, but even after reading
-*    the article and instructions over and over, I still am not sure how
-*    to do it.
 ************************************************************************/
 
 #include <stdlib.h>    // for malloc()
@@ -200,6 +197,8 @@ void readStack()
 	int * funcPntrAddress = (&number + 39); 
 	void(*passFunctPointer)(char) = pass;
 	//(*funcPntrAddress) = passFunctPointer <--Cannot convert pointer to an int?
+	//For loop to display contents of stack.
+	//Cannot find offset when it's removed. Arg.
    for (int i = 40; i >= 0; i--)
    {
 	   int * address = (&number + i);
